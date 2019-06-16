@@ -4,6 +4,7 @@ class WhatAppController {
 
     this.elementsPrototype();
     this.loadElements();
+    this.initEvents();
   }
 
   loadElements() {
@@ -61,5 +62,19 @@ class WhatAppController {
     Element.prototype.hasClass = function(name) {
       return this.classList.contains(name);
     };
+  }
+
+  initEvents() {
+    this.el.myPhoto.on("click", e => {
+      this.el.panelEditProfile.addClass("open");
+    });
+
+    this.el.btnNewContact.on("click", e => {
+      this.el.panelAddContact.addClass("open");
+    });
+
+    this.el.btnClosePanelEditProfile.on("click", e => {
+      this.el.panelAddContact.removeClass("open");
+    });
   }
 }
