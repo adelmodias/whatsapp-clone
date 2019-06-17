@@ -159,8 +159,8 @@ class WhatAppController {
   }
 
   closeMenuAttach(e) {
-    document.removeEventListener('click', this.closeMenuAttach);
-    this.el.menuAttach.removeClass('open');
+    document.removeEventListener("click", this.closeMenuAttach);
+    this.el.menuAttach.removeClass("open");
   }
 
   closeAllLeftPanel() {
