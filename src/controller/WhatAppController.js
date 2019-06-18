@@ -1,4 +1,7 @@
-class WhatAppController {
+import { Format } from "./../utils/Format";
+import { CameraController } from "./CameraConroller";
+
+export class WhatAppController {
   constructor() {
     // console.log("WhatAppController ok");
 
@@ -257,7 +260,7 @@ class WhatAppController {
         // this.el.inputText.appendChild(img);
 
         let cursor = window.getSelection();
-        if(!cursor.focusNode || !cursor.focusNode.id == "input-text") {
+        if (!cursor.focusNode || !cursor.focusNode.id == "input-text") {
           this.el.inputText.focus();
           cursor = window.getSelection();
         }
@@ -272,7 +275,7 @@ class WhatAppController {
         range.insertNode(frag);
         range.setStartAfter(img);
 
-        this.el.inputText.dispatchEvent(new Event('keyup'));
+        this.el.inputText.dispatchEvent(new Event("keyup"));
       });
     });
   }
