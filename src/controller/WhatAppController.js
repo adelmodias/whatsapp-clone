@@ -1,5 +1,6 @@
 import { Format } from "./../utils/Format";
 import { CameraController } from "./CameraConroller";
+import { MicrophoneController } from "./MicrophoneConroller";
 import { DocumentPreviewController } from "./DocumentPreviewController";
 
 export class WhatAppController {
@@ -282,13 +283,17 @@ export class WhatAppController {
       this.el.recordMicrophone.show();
       this.el.btnSendMicrophone.hide();
       this.startRecordMicrophoneTime();
+
+      this._microphoneController = new MicrophoneController();
     });
 
     this.el.btnCancelMicrophone.on("click", e => {
+      this._microphoneController.stop();
       this.closeRecordMicrophone();
     });
 
     this.el.btnFinishMicrophone.on("click", e => {
+      this._microphoneController.stop();
       this.closeRecordMicrophone();
     });
 
