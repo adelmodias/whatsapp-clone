@@ -286,7 +286,7 @@ export class WhatAppController {
 
       this._microphoneController = new MicrophoneController();
       this._microphoneController.on("ready", audio => {
-        console.log("ready event")
+        console.log("ready event");
         this._microphoneController.startRecorder();
       });
     });

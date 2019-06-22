@@ -42,7 +42,7 @@ export class MicrophoneController extends ClassEvent {
       this._recordedChunks = [];
 
       this._mediaRecorder.addEventListener('dataavailable', e => {
-        if (e.data.size > 0) this._recordedChunks.push();
+        if (e.data.size > 0) this._recordedChunks.push(e.data);
       });
 
       this._mediaRecorder.addEventListener('stop', e => {
@@ -53,7 +53,7 @@ export class MicrophoneController extends ClassEvent {
         let filename = `rec_${Date.now()}.webm`;
 
         let file = new File([blob], filename, {
-          tpe: this._mimeType,
+          type: this._mimeType,
           lastModified: Date.now()
         });
 
