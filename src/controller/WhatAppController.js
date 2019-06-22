@@ -2,6 +2,7 @@ import { Format } from "./../utils/Format";
 import { CameraController } from "./CameraConroller";
 import { MicrophoneController } from "./MicrophoneConroller";
 import { DocumentPreviewController } from "./DocumentPreviewController";
+import { firebase, Firebase } from "./../utils/Firebase";
 
 export class WhatAppController {
   constructor() {
@@ -10,6 +11,7 @@ export class WhatAppController {
     this.elementsPrototype();
     this.loadElements();
     this.initEvents();
+    this._firebase = new Firebase();
   }
 
   loadElements() {
