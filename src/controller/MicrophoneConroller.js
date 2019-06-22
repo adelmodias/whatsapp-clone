@@ -41,11 +41,11 @@ export class MicrophoneController extends ClassEvent {
 
       this._recordedChunks = [];
 
-      this._mediaRecorder.addEventListener('dataavailable', e => {
+      this._mediaRecorder.addEventListener("dataavailable", e => {
         if (e.data.size > 0) this._recordedChunks.push(e.data);
       });
 
-      this._mediaRecorder.addEventListener('stop', e => {
+      this._mediaRecorder.addEventListener("stop", e => {
         let blob = new Blob(this._recordedChunks, {
           type: this._mimeType
         });
@@ -67,11 +67,10 @@ export class MicrophoneController extends ClassEvent {
         // }
 
         // reader.readAsDataURL(file);
-
       });
 
       this._mediaRecorder.start();
-
+      this.startTimer();
     }
   }
 
@@ -79,6 +78,19 @@ export class MicrophoneController extends ClassEvent {
     if (this.isAvailable()) {
       this._mediaRecorder.stop();
       this.stop();
+      this.startTimer();
     }
+  }
+
+  startTimer() {
+    let start = Date.now();
+
+    this._recordMicrophoneInterval = setInterval(() => {
+      this.trigger("recordTimer", Date.now() - start);
+    }, 100);
+  }
+
+  stopTimer() {
+    clearInterval(this._recordMicrophoneInterval);
   }
 }

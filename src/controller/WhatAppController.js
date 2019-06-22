@@ -20,59 +20,59 @@ export class WhatAppController {
   }
 
   elementsPrototype() {
-    Element.prototype.hide = function () {
+    Element.prototype.hide = function() {
       this.style.display = "none";
       return this;
     };
 
-    Element.prototype.show = function () {
+    Element.prototype.show = function() {
       this.style.display = "block";
       return this;
     };
 
-    Element.prototype.toggle = function () {
+    Element.prototype.toggle = function() {
       this.style.display = this.style.display === "none" ? "block" : "none";
       return this;
     };
 
-    Element.prototype.on = function (events, fn) {
+    Element.prototype.on = function(events, fn) {
       events.split(" ").forEach(event => {
         this.addEventListener(event, fn);
       });
       return this;
     };
 
-    Element.prototype.css = function (styles) {
+    Element.prototype.css = function(styles) {
       for (let name in styles) {
         this.style[name] = styles[name];
       }
       return this;
     };
 
-    Element.prototype.addClass = function (name) {
+    Element.prototype.addClass = function(name) {
       this.classList.add(name);
       return this;
     };
 
-    Element.prototype.removeClass = function (name) {
+    Element.prototype.removeClass = function(name) {
       this.classList.remove(name);
       return this;
     };
 
-    Element.prototype.toggleClass = function (name) {
+    Element.prototype.toggleClass = function(name) {
       this.classList.toggle(name);
       return this;
     };
 
-    Element.prototype.hasClass = function (name) {
+    Element.prototype.hasClass = function(name) {
       return this.classList.contains(name);
     };
 
-    HTMLFormElement.prototype.getForm = function () {
+    HTMLFormElement.prototype.getForm = function() {
       return new FormData(this);
     };
 
-    HTMLFormElement.prototype.toJSON = function () {
+    HTMLFormElement.prototype.toJSON = function() {
       let json = {};
 
       this.getForm().forEach((value, key) => {
@@ -282,12 +282,15 @@ export class WhatAppController {
     this.el.btnSendMicrophone.on("click", e => {
       this.el.recordMicrophone.show();
       this.el.btnSendMicrophone.hide();
-      this.startRecordMicrophoneTime();
 
       this._microphoneController = new MicrophoneController();
       this._microphoneController.on("ready", audio => {
-        console.log("ready event");
+        // console.log("ready event");
         this._microphoneController.startRecorder();
+      });
+
+      this._microphoneController.on("recordTimer", timer => {
+        this.el.recordMicrophoneTimer.innerHTML = Format.toTime(timer);
       });
     });
 
@@ -365,20 +368,9 @@ export class WhatAppController {
     });
   }
 
-  startRecordMicrophoneTime() {
-    let start = Date.now();
-
-    this._recordMicrophoneInterval = setInterval(() => {
-      this.el.recordMicrophoneTimer.innerHTML = Format.toTime(
-        Date.now() - start
-      );
-    }, 100);
-  }
-
   closeRecordMicrophone() {
     this.el.recordMicrophone.hide();
     this.el.btnSendMicrophone.show();
-    clearInterval(this._recordMicrophoneInterval);
   }
 
   closeAllMainPanel() {
