@@ -16,7 +16,7 @@ export class Firebase {
   }
 
   init() {
-    if (!this._initalized) {
+    if (!window._initalizedFirebase) {
       firebase.initializeApp(this._config);
 
       // Agora o timestampsInSnapshots é inicializado como true por padrão
@@ -24,7 +24,7 @@ export class Firebase {
       //     timestampsInSnapshots: true
       //   });
 
-      this._initalized = true;
+      window._initalizedFirebase = true;
     }
   }
 

@@ -2,7 +2,8 @@ import { Format } from "./../utils/Format";
 import { CameraController } from "./CameraConroller";
 import { MicrophoneController } from "./MicrophoneConroller";
 import { DocumentPreviewController } from "./DocumentPreviewController";
-import { firebase, Firebase } from "./../utils/Firebase";
+import { Firebase } from "./../utils/Firebase";
+import { User } from "./../model/User";
 
 export class WhatAppController {
   constructor() {
@@ -18,9 +19,21 @@ export class WhatAppController {
   initAuth() {
     this._firebase.initAuth()
       .then(response => {
-        this._user = response.user;
+        this._user = new User();
 
-        this.el.appContent.css({display: 'flex'});
+        let userRef = User.findByEmail(response.user.email);
+
+        userRef.set({
+          name: response.user.displayName,
+          email: response.user.email,
+          photo: response.user.photoURL
+        }).then(() => {
+          this.el.appContent.css({display: 'flex'});
+        })
+        .catch(err => {
+          console.error(err);
+        });
+
       })
       .catch(err => {
         console.error(err);
